@@ -1,0 +1,91 @@
+---
+title: "HW 7"
+author: "Tanush"
+email : "ts1333@scarletmail.rutgers.edu"
+date: "21/11/2024"
+output: html_document
+---
+```{r}
+# Load required libraries
+library(readxl)
+library(forecast)
+
+# Read the Excel file
+file_path <- "C:/Users/tanus/Downloads/BF assign 7/Walmart_Sales.xlsx"
+sales_data <- read_excel(file_path, sheet = "Walmart_Sales")
+
+# Display the first few rows to understand the structure
+head(sales_data)
+
+# Convert Date column to Date type
+sales_data$Date <- as.Date(sales_data$Date)
+
+# Aggregate Weekly_Sales across all stores
+agg_sales <- aggregate(Weekly_Sales ~ Date, data = sales_data, sum)
+
+# View the first few rows of the aggregated data
+head(agg_sales)
+
+# Create a time series object for the aggregated Weekly_Sales (to see total sales across all stores)
+sales_ts <- ts(agg_sales$Weekly_Sales, start = c(2010, 5), frequency = 52) # Weekly data
+
+# Plot the time series
+plot(sales_ts, main = "Total Weekly Sales Time Series", xlab = "Year", ylab = "Sales", col = "blue")
+
+# It looks like there is a clear pattern of seasonality in your sales data. Here are some observations:
+# 
+# Regular Fluctuations: The data shows regular ups and downs within each year, which suggests a seasonal pattern.
+# 
+# Significant Peaks: There are noticeable spikes in sales around the beginning of 2011 and 2012. These peaks might indicate seasonal events or promotions that occur at the same time each year.
+
+# Fit an ARIMA model automatically
+arima_model <- auto.arima(sales_ts)
+
+# Display the ARIMA model details
+summary(arima_model)
+
+
+### Analysis:
+# 1. **Seasonality**: The term ((0,1,0)[52]) indicates seasonal differencing with a period of 52, suggesting a yearly seasonal component in the data.
+
+# 2. The forecast errors are high (RMSE and MAE are large), suggesting that the model may not fully capture the volatility of the sales data.
+# 
+# 3. The AIC and BIC values are close, but since they are large, it could indicate that there might be room for model improvement (e.g., using a higher-order ARIMA or adding external regressors like holidays or promotions).
+
+### Residual analysis
+
+# Extract residuals from the ARIMA model
+residuals <- residuals(arima_model)
+
+# Plot residuals
+plot(residuals, main = "Residuals of ARIMA Model", ylab = "Residuals", xlab = "Time", col = "red")
+
+# Model Fit: The presence of non-random residuals indicates that there are aspects of the data that the model hasn't fully explained. 
+# 
+# Unexplained Volatility: The large spikes and dips might point to specific events or outliers that were not accounted for. Identifying and understanding these could help improve the model.
+
+# Plot ACF of residuals to check for autocorrelation
+acf(residuals, main = "ACF of Residuals")
+
+# Since most of the bars fall within the confidence intervals, it indicates that the residuals are mostly random beyond the first lag. This means the ARIMA model has done a good job of capturing the main structure of the data.
+
+# Perform Ljung-Box test to check for autocorrelation in the residuals
+Box.test(residuals, lag = 52, type = "Ljung-Box") # Lag 52 for weekly seasonality
+
+# The p-value is 0.5284, which is greater than the common significance levels (e.g., 0.05 or 0.01). This indicates that there is no significant evidence of autocorrelation in the residuals.
+
+# Forecast the next 5 periods (weeks)
+forecast_arima <- forecast(arima_model, h = 5)
+
+# Display the forecast values
+print(forecast_arima)
+
+# Calculate accuracy of the ARIMA model
+accuracy_metrics <- accuracy(arima_model)
+
+# Print the accuracy metrics
+print(accuracy_metrics)
+
+
+```
+
