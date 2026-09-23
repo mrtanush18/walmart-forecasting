@@ -1,6 +1,6 @@
 # Walmart Weekly Sales Forecasting
 
-## 1. Forecasting Question
+## Problem Statement
 
 **What will be the total sales across all Walmart stores for each of the 10 weeks following the end of the dataset?**
 
@@ -11,7 +11,7 @@ The goal is to forecast Walmart's combined weekly sales and use those prediction
 - **Workforce Planning:** Allocate staff and logistics resources during busy periods.
 - **Seasonal Planning:** Prepare for higher sales around holidays and major shopping periods.
 
-## 2. Understanding the Dataset
+## Understanding the Dataset
 
 The dataset contains weekly sales information for Walmart stores across the United States from **2010 to 2012**.
 
@@ -32,7 +32,7 @@ Each row represents **one Walmart store during one week**. The data includes sal
 
 For forecasting, the weekly sales from all available stores were combined to create **one total sales value for each week**.
 
-## 3. Exploratory Data Analysis
+## Exploratory Data Analysis
 
 ### Seasonal Sales Patterns
 
@@ -54,7 +54,7 @@ The first lag shows strong positive autocorrelation. In simple terms, **sales in
 
 This indicates that previous sales patterns contain useful information for predicting future sales.
 
-## 4. Forecast Accuracy
+## Forecast Accuracy
 
 ### Mean Absolute Percentage Error (MAPE)
 
@@ -66,7 +66,7 @@ For example, a MAPE of 5% means the predictions are approximately 5% away from a
 
 MAPE was used as the primary measure for comparing the forecasting models.
 
-## 5. Forecasting Methods
+## Forecasting Methods
 
 Four forecasting methods were evaluated.
 
@@ -127,7 +127,7 @@ The ARIMA residuals provide several useful insights:
 
 These results suggest that ARIMA captures most of the important time-based patterns in the sales data.
 
-## 6. Model Comparison
+## Model Comparison
 
 | Model | MAPE | RMSE | Bias (MPE) | Summary |
 |---|---:|---:|---:|---|
@@ -144,7 +144,7 @@ The model also had very low bias, with an MPE of approximately **0.3%**, meaning
 
 The MASE was below 1, indicating that ARIMA performed better than the simple baseline methods used for comparison.
 
-## 7. Final 10-Week Forecast
+## Final 10-Week Forecast
 
 The ARIMA model was used to forecast the 10 weeks following the end of the historical dataset.
 
@@ -169,7 +169,7 @@ The ARIMA model was used to forecast the 10 weeks following the end of the histo
 - Sales are expected to decline to approximately **$45.7M** by the final forecast week in January 2013.
 - The 95% confidence intervals show the range in which the actual sales value may reasonably fall.
 
-## 8. Business Recommendations
+## Business Recommendations
 
 ### Inventory Planning
 
@@ -187,7 +187,7 @@ The forecasted sales average approximately **$55M per week**, corresponding to r
 
 The strong holiday-related spikes demonstrate the importance of preparing inventory, staffing, and operations before major shopping periods.
 
-## 9. Conclusion
+## Conclusion
 
 The analysis shows that Walmart's weekly sales contain clear **trend, seasonal, and time-dependent patterns**.
 
@@ -197,7 +197,7 @@ The final forecast indicates relatively stable sales during normal weeks, with s
 
 Overall, the analysis demonstrates how historical sales data and time-series forecasting can help businesses make more informed decisions about **inventory, staffing, revenue planning, and seasonal preparation**.
 
-## 10. Future Improvements
+## Future Improvements
 
 Future versions of the analysis could improve forecasting by:
 
