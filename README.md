@@ -1,7 +1,5 @@
 # Walmart Weekly Sales Forecasting
 
-**Project Report by Tanush Bhaskar Shetty**
-
 ## 1. Forecasting Question
 
 **What will be the total sales across all Walmart stores for each of the 10 weeks following the end of the dataset?**
